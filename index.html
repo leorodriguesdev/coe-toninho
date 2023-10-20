@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Apelidos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="d-flex flex-row  align-content-center align-items-center justify-content-center">
+            <div class="col-md-6 text-center">
+                <h1>Coé Toninho Tornado</h1>
+                <button class="btn btn-primary mt-3 mb-3" onclick="gerarApelido()">Fala comigo!</button>
+                <img id="imagemAleatoria" src="" alt="Imagem Aleatória" style="display: none; width: 300px;" class="img-thumbnail mb-3">
+                <p id="apelido" class="lead"></p>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const apelidos = [
+        "Mussarelo", "Calabreso", "Delício", "Samsungo", "Garoto de Ipanemo", 
+        "Bolso Famílio", "Mato Atlântico", "Rito Cadillaco", "Casos Bahio", "Silos Malafaio", 
+        "Patricio Poeto", "Valesco Popozudo", "Arábio Saudito", "Magazino Luizo", "Iphono", 
+        "Caldo de Cano", "Sapopembo", "Iveto Sangalo", "Inseticido", "Madonno", 
+        "Princeso", "Panqueco", "Salado de Fruto", "Virílio", "Cracolândio", 
+        "Cervejo", "Borboleto", "Cadelo", "Lasanho", "Frigideiro", 
+        "Hemorróido", "Lapiseiro", "Amoxilino", "Carniço", "Geladeiro", 
+        "Tutti-fruto", "Menstruado", "Prechéco", "Lantejolo", "Camisinho", 
+        "Bisteco", "Aeromoço", "Lagartixo", "Dipirono", "Zebro", 
+        "Mortadelo", "Capivaro", "Cibaleno", "Salsicho", "Tilápio", 
+        "Lombrigo", "Perereco", "Monaliso", "Calopsito", "Carambolo", 
+        "Lesmo", "Pastilho", "Chavasco", "Perébo", "Chupeto", 
+        "Fanto Laranjo", "Sandálio", "Seborréio", "Pitango", "Sonho de Valso", 
+        "Macaxero", "Jiboio", "Cenouro", "Corvino", "Toscano", 
+        "Alfaço", "Cerejo", "Margarido", "Gasolino", "Donzelo", 
+        "Tadalafilo", "Menopauso", "Xilocaíno", "Mamadeiro", "Abelho", 
+        "Testosterono", "Lacraio", "Saboneto", "Tubaíno", "Shakiro", 
+        "Ludmilo", "Cláudia Raio", "Anito", "Caraguatatubo", "Araraquaro", 
+        "Ubatubo", "Braganço Paulisto"
+    ];
+
+    const cumprimentos = [
+        "Alô, meu", "Salve, Salve", "E aí", "Grande", "Como vai", 
+        "Olá meu", "Fala", "Tudo bem meu", "Vamos que vamos meu", 
+        "Saravá meu", "É 'nóis' meu", "Opa! Meu", "Foi um prazer", 
+        "Fala tu", "Coé"
+    ];
+
+    function gerarApelido() {
+        const indexApelido = Math.floor(Math.random() * apelidos.length);
+        const indexCumprimento = Math.floor(Math.random() * cumprimentos.length);
+
+        const mensagem = `${cumprimentos[indexCumprimento]} ${apelidos[indexApelido]}!`;
+
+        // Escolhendo imagem aleatória
+        const numeroDeImagens = 7; // Ajuste para o número real de imagens que você tem
+        const imagemAleatoria = Math.floor(Math.random() * numeroDeImagens) + 1;
+        const caminhoDaImagem = `./img/${imagemAleatoria}.png`;
+
+        const imgElement = document.getElementById("imagemAleatoria");
+        imgElement.src = caminhoDaImagem;
+        imgElement.style.display = "block";
+
+        document.getElementById("apelido").innerText = mensagem;
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>
