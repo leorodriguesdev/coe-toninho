@@ -5,93 +5,191 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de Apelidos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts para tipografia -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Ícone personalizado -->
+    <link rel="icon" href="./img/favicon.ico" type="image/x-icon">
+    <style>
+        /* Configurações básicas do corpo para utilizar Flexbox */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+        /* Estilização do container principal */
+        .container {
+            max-width: 600px;
+            padding: 2rem;
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        /* Botão personalizado */
+        .btn-custom {
+            background-color: #ff5722;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        .btn-custom:hover {
+            background-color: #e64a19;
+        }
+        /* Estilização do apelido */
+        #apelido {
+            font-size: 1.5rem;
+            user-select: none;
+        }
+        /* Estilização da imagem aleatória */
+        #imagemAleatoria {
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        #imagemAleatoria:hover {
+            transform: scale(1.05);
+        }
+        /* Tooltip personalizado */
+        .tooltip-custom {
+            position: absolute;
+            background-color: #333;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            font-size: 0.875rem;
+        }
+        .tooltip-custom.show {
+            opacity: 1;
+        }
+        /* Centralização vertical e horizontal do main */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Estilização do header */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            margin-top: 1rem;
+        }
+        /* Estilização do footer */
+        footer {
+            text-align: center;
+            padding: 1rem 0;
+            background-color: #1e1e1e;
+        }
+    </style>
 </head>
-<body  class="bg-dark">
-    <div class="container mt-5">
-        <div class="d-flex flex-row  align-content-center align-items-center justify-content-center">
-            <div class="col-md-6 d-flex flex-column  align-content-center align-items-center justify-content-center">
-                <h2 class="text-light my-4">Coé Toninho!</h2>
-                <img id="imagemAleatoria" src="" alt="Imagem Aleatória" style="display: none; width: 300px;" class="img-thumbnail mb-3">
-                <div class="d-flex justify-content-center mb-3">
-                    <h1 id="apelido" class="text-light mt-4 text-center" onclick="copiarTexto()" style="cursor: pointer;" title="Clique para copiar"></h1>
-                </div>
-                <button class="btn btn-secondary mt-3 mb-3" onclick="gerarApelido()">Fala comigo!</button>
+<body>
+    <header>
+        <h1 class="display-4">Gerador de Apelidos do Toninho</h1>
+        <p class="lead">Crie apelidos únicos e divertidos dessa "pérola" da comédia!</p>
+    </header>
 
+    <main>
+        <div class="container">
+            <div class="d-flex flex-column align-items-center">
+                <img id="imagemAleatoria" src="" alt="Imagem Aleatória" style="display: none; width: 100%;" class="img-fluid mb-4">
+                <div class="text-center mb-4 position-relative">
+                    <h2 id="apelido" class="text-center" onclick="copiarTexto()" tabindex="0" role="button" aria-label="Apelido. Clique para copiar." title="Clique para copiar"></h2>
+                    <div id="tooltip" class="tooltip-custom">Copiado!</div>
+                </div>
+                <button class="btn btn-custom btn-lg w-100" onclick="gerarApelido()">Fala comigo Calabreso!</button>
             </div>
         </div>
-    </div>
+    </main>
 
-<script>
-    const apelidos = [
-        "Mussarelo", "Calabreso", "Delício", "Samsungo", "Garoto de Ipanemo", 
-        "Bolso Famílio", "Mato Atlântico", "Rito Cadillaco", "Casos Bahio", "Silos Malafaio", 
-        "Patricio Poeto", "Valesco Popozudo", "Arábio Saudito", "Magazino Luizo", "Iphono", 
-        "Caldo de Cano", "Sapopembo", "Iveto Sangalo", "Inseticido", "Madonno", 
-        "Princeso", "Panqueco", "Salado de Fruto", "Virílio", "Cracolândio", 
-        "Cervejo", "Borboleto", "Cadelo", "Lasanho", "Frigideiro", 
-        "Hemorróido", "Lapiseiro", "Amoxilino", "Carniço", "Geladeiro", 
-        "Tutti-fruto", "Menstruado", "Prechéco", "Lantejolo", "Camisinho", 
-        "Bisteco", "Aeromoço", "Lagartixo", "Dipirono", "Zebro", 
-        "Mortadelo", "Capivaro", "Cibaleno", "Salsicho", "Tilápio", 
-        "Lombrigo", "Perereco", "Monaliso", "Calopsito", "Carambolo", 
-        "Lesmo", "Pastilho", "Chavasco", "Perébo", "Chupeto", 
-        "Fanto Laranjo", "Sandálio", "Seborréio", "Pitango", "Sonho de Valso", 
-        "Macaxero", "Jiboio", "Cenouro", "Corvino", "Toscano", 
-        "Alfaço", "Cerejo", "Margarido", "Gasolino", "Donzelo", 
-        "Tadalafilo", "Menopauso", "Xilocaíno", "Mamadeiro", "Abelho", 
-        "Testosterono", "Lacraio", "Saboneto", "Tubaíno", "Shakiro", 
-        "Ludmilo", "Cláudia Raio", "Anito", "Caraguatatubo", "Araraquaro", 
-        "Ubatubo", "Braganço Paulisto", "Ratazano", "Babadeiro", "Bala fino", 
-        "Xavásco", "Buceto", "Caga sangue", "Linguiço", "Marilio Mendonço", "Surubo",
-        "Pérebo", "Áxilo"
-    ];
+    <footer class="bg-dark text-white mt-5">
+        <p>&copy; 2025 Gerador de Apelidos do Toninho. Todos os direitos reservados.</p>
+    </footer>
 
-    const cumprimentos = [
-        "Alô, meu", "Salve, Salve", "E aí", "Grande", "Como vai", 
-        "Eae meu", "Fala", "Tudo bem meu", "Vamos que vamos meu", 
-        "Saravá meu", "É 'nóis' meu", "Opa! Meu", "Foi um prazer", 
-        "Fala tu", "Coé", "Qualé", "É o seguinte", "Para ai", "To te falando",
-        "Tô ligado", "O barato é o seguinte", "Caramba", "Acorda"
-    ];
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        const apelidos = [
+            "Mussarelo", "Calabreso", "Delício", "Samsungo", "Garoto de Ipanemo", 
+            "Bolso Famílio", "Mato Atlântico", "Rito Cadillaco", "Casos Bahio", "Silos Malafaio", 
+            "Patricio Poeto", "Valesco Popozudo", "Arábio Saudito", "Magazino Luizo", "Iphono", 
+            "Caldo de Cano", "Sapopembo", "Iveto Sangalo", "Inseticido", "Madonno", 
+            "Princeso", "Panqueco", "Salado de Fruto", "Virílio", "Cracolândio", 
+            "Cervejo", "Borboleto", "Cadelo", "Lasanho", "Frigideiro", 
+            "Hemorróido", "Lapiseiro", "Amoxilino", "Carniço", "Geladeiro", 
+            "Tutti-fruto", "Menstruado", "Prechéco", "Lantejolo", "Camisinho", 
+            "Bisteco", "Aeromoço", "Lagartixo", "Dipirono", "Zebro", 
+            "Mortadelo", "Capivaro", "Cibaleno", "Salsicho", "Tilápio", 
+            "Lombrigo", "Perereco", "Monaliso", "Calopsito", "Carambolo", 
+            "Lesmo", "Pastilho", "Chavasco", "Perébo", "Chupeto", 
+            "Fanto Laranjo", "Sandálio", "Seborréio", "Pitango", "Sonho de Valso", 
+            "Macaxero", "Jiboio", "Cenouro", "Corvino", "Toscano", 
+            "Alfaço", "Cerejo", "Margarido", "Gasolino", "Donzelo", 
+            "Tadalafilo", "Menopauso", "Xilocaíno", "Mamadeiro", "Abelho", 
+            "Testosterono", "Lacraio", "Saboneto", "Tubaíno", "Shakiro", 
+            "Ludmilo", "Cláudia Raio", "Anito", "Caraguatatubo", "Araraquaro", 
+            "Ubatubo", "Braganço Paulisto", "Ratazano", "Babadeiro", "Bala fino", 
+            "Xavásco", "Buceto", "Caga sangue", "Linguiço", "Marilio Mendonço", "Surubo",
+            "Pérebo", "Áxilo"
+        ];
 
-    function gerarApelido() {
-    const indexApelido = Math.floor(Math.random() * apelidos.length);
-    const indexCumprimento = Math.floor(Math.random() * cumprimentos.length);
+        const cumprimentos = [
+            "Alô, meu", "Salve, Salve", "E aí", "Grande", "Como vai", 
+            "Eae meu", "Fala", "Tudo bem meu", "Vamos que vamos meu", 
+            "Saravá meu", "É 'nóis' meu", "Opa! Meu", "Foi um prazer", 
+            "Fala tu", "Coé", "Qualé", "É o seguinte", "Para ai", "To te falando",
+            "Tô ligado", "O barato é o seguinte", "Caramba", "Acorda"
+        ];
 
-    const mensagem = `${cumprimentos[indexCumprimento]} ${apelidos[indexApelido]}! <img src="./img/copy.svg" alt="" style="cursor: pointer;" onclick="copiarTexto(event)">`;
+        function gerarApelido() {
+            const indexApelido = Math.floor(Math.random() * apelidos.length);
+            const indexCumprimento = Math.floor(Math.random() * cumprimentos.length);
 
-    // Escolhendo imagem aleatória
-    const numeroDeImagens = 7; // Ajuste para o número real de imagens que você tem
-    const imagemAleatoria = Math.floor(Math.random() * numeroDeImagens) + 1;
-    const caminhoDaImagem = `./img/${imagemAleatoria}.png`;
+            const mensagem = `${cumprimentos[indexCumprimento]} ${apelidos[indexApelido]}!`;
 
-    const imgElement = document.getElementById("imagemAleatoria");
-    imgElement.src = caminhoDaImagem;
-    imgElement.style.display = "block";
+            // Escolhendo imagem aleatória
+            const numeroDeImagens = 7; // Ajuste para o número real de imagens que você tem
+            const imagemAleatoria = Math.floor(Math.random() * numeroDeImagens) + 1;
+            const caminhoDaImagem = `./img/${imagemAleatoria}.png`;
 
-    const apelidoElement = document.getElementById("apelido");
-    apelidoElement.innerHTML = mensagem;
-    apelidoElement.title = "Clique para copiar";
-}
+            const imgElement = document.getElementById("imagemAleatoria");
+            imgElement.src = caminhoDaImagem;
+            imgElement.style.display = "block";
 
-function copiarTexto(event) {
-    event.stopPropagation();  // Para prevenir o disparo de outros eventos (evita conflitos)
-    
-    const apelidoElement = document.getElementById('apelido');
-    if (navigator.clipboard) {
-        navigator.clipboard.writeText(apelidoElement.textContent).then(() => {
-            apelidoElement.title = "Copiado!";
-        }).catch(err => {
-            console.error('Não foi possível copiar o texto: ', err);
+            const apelidoElement = document.getElementById("apelido");
+            apelidoElement.textContent = mensagem;
+            apelidoElement.title = "Clique para copiar";
+        }
+
+        function copiarTexto() {
+            const apelidoElement = document.getElementById('apelido');
+            const tooltip = document.getElementById('tooltip');
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(apelidoElement.textContent).then(() => {
+                    // Mostrar tooltip
+                    tooltip.classList.add('show');
+                    setTimeout(() => {
+                        tooltip.classList.remove('show');
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Não foi possível copiar o texto: ', err);
+                });
+            } else {
+                console.log('Navegador não suporta Clipboard API.');
+            }
+        }
+
+        // Permitir copiar via teclado (Enter ou Espaço)
+        document.getElementById('apelido').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                copiarTexto();
+            }
         });
-    } else {
-        console.log('Navegador não suporta Clipboard API.');
-    }
-}
-
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
+    </script>
 </body>
 </html>
